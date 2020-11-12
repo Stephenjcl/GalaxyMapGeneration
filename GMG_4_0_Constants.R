@@ -1,0 +1,40 @@
+####Constants####
+
+galaxyScale <- 0 #Scaling factor between 0 and 16. At 0, it produces individual stars. Any larger and you will have "overviews" of sectors.
+
+SystemDensity <- c(0xBF78, 0x5B2F, 0xDF85, 0x3C14, 0xDADD, 0x38DF, 0xE08F, 0x88D7, 0xB3AB, 0xEA86, 0x1200, 0x8DB3, 0xFF0D, 0xA593, 0xEC66, 0x1988, 0x8500, 0xC1E7, 0x9281, 0xD7EB, 0x5F77, 0xD6A5, 0x310B, 0x2C98, 0x906E, 0x2CB6, 0xF137, 0x8ADC, 0x0FC7, 0x76B8, 0xB587, 0x2D1B, 0xAD4C, 0x1AEB, 0xB749, 0xC60D, 0xB914, 0x1B3A, 0xAA5E, 0x3764, 0xD7A0, 0x650E, 0xDB8D, 0x3E98, 0x1DDD, 0xD3BB, 0x54A4, 0x66BA, 0x164F, 0xF3B8, 0x7460, 0xBF9A, 0x7AA7, 0x459C, 0x61EC, 0xF706, 0x958C, 0x8B54, 0x86E8, 0xC653, 0x5D7C, 0x6AC9, 0xAD35, 0x8B1F, 0x30C6, 0x7EF7, 0x4E4F, 0xD1F3, 0xD042, 0x4AAC, 0x6F5A, 0x15C4, 0x4DC3, 0x923C, 0x04E2, 0x2C8B, 0xAB14, 0x9689, 0x5553, 0x92F7, 0x3BC6, 0x7C86, 0x5E8D, 0xFF7F, 0x8F5C, 0x0450, 0x0BD3, 0xB01F, 0x2744, 0xDF20, 0xE40E, 0x932C, 0x8B90, 0xCF40, 0x6E2B, 0x81BE, 0x200B, 0xA64F, 0x2BA4, 0xDCB8, 0xEA35, 0xACC4, 0x1421, 0x9025, 0x9A98, 0x4993, 0x99EF, 0xB4FD, 0x0BCF, 0x7434, 0x7287, 0xC67F, 0x1967, 0xF486, 0x12AD, 0xDF33, 0xDF74, 0x2913, 0x2FF4, 0xD76B, 0x5A2A, 0x8B80, 0xCB01, 0x742B, 0x09B4, 0xC203, 0x56AF, 0xDAD6, 0x8000, 0x5555, 0x4000, 0x3333, 0x2AAA, 0x2492, 0x1FF0, 0x1C71, 0x1999, 0x1745, 0x1555, 0x13B1, 0x1249, 0x1111, 0x0FF0, 0x0F0F); #To avoid seeing the same sector over and over whereever it has the same density, there is a table 'SystemDensity', which holds 128 2-byte values to randomize the contents of a single sector. Unfortunately, this is not enough data to avoid the glaring artefacts visible in the center of the galaxy. Since almost every pixel in there returns a max density, the data in the SystemDensity table is overused and one can clearly see it's all fake.
+
+#Read in the milky way data
+#Realistically Scaled Production
+TheMilkyWayHR <- readGalaxy()
+
+#Chance of different star types
+StarChance_Type <- c(0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 5, 6, 7, 8);
+
+#The different descriptions
+StarDesc <- c("Type'M'flare star", "Faint type'M'red star", "Type'M'red star", "Type'K'orange star", "Type'G'yellow star", "Type'F'white star", "Type'A'hot white star", "White dwarf star", "Red giant star")
+
+#Chance of multiple stars
+StarChance_Multiples <- c(
+  0, 0, 0, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0, 0,
+  0, 0, 0, 1, 1, 1, 1, 1,
+  1, 1, 2, 2, 2, 3, 4, 5
+);
+
+#Sizes of stars
+SizeForStar <- c(
+  300, 300, 350, 400,
+  450, 500, 500, 200,
+  700, 900, 800, 1100,
+  1400, 600
+)
+
+ColorForStar <-c("#C80000", "#C80000", "#C80000", "#C88800", "#C8DC00", "#C8C8C8", "#C8C8C8","#C8C8C8","#C80000")
+
+load("PlanetaryData.RData")
+
+####Naming Constants####
+load("NamingData.RData")
+
+syllablechance <- c(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2) #32-bits to represent the
